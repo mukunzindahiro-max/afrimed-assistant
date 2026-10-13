@@ -212,7 +212,8 @@ def load_all_metrics():
 
 
 def results_table(df):
-    cols = ["name", "group", "mcq_accuracy", "mcq_macro_f1", "mcq_ece", "mcq_multi_exact_match", "saq_rougeL",
+    cols = ["name", "group", "mcq_accuracy", "mcq_macro_f1", "mcq_ece", "mcq_multi_exact_match", "mcq_multi_jaccard",
+            "saq_rougeL",
             "saq_bleu", "saq_chrf", "saq_bertscore_f1", "saq_semantic_sim", "trainable_params", "train_time_min",
             "final_val_loss"]
     return df[[c for c in cols if c in df.columns]].sort_values("mcq_accuracy", ascending=False)

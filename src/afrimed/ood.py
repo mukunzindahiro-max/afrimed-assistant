@@ -70,6 +70,26 @@ def in_domain_sources():
     return reference.reset_index(drop=True), val_in, test_in
 
 
+def verify_reference_isolation(threshold=0.9):
+    reference, val_in, test_in = in_domain_sources()
+    held = pd.concat([val_in.assign(split="val"), test_in.assign(split="test")], ignore_index=True)
+    ref_keys = set(reference.question.map(normalize_key))
+    exact = held.question.map(normalize_key).isin(ref_keys)
+    vec = TfidfVectorizer(ngram_range=(1, 2), sublinear_tf=True).fit(pd.concat([reference.question, held.question]))
+    sims = np.asarray((vec.transform(reference.question) @ vec.transform(held.question).T).max(axis=1).todense()).ravel()
+    near = sims >= threshold
+    return {
+        "reference_size": int(len(reference)),
+        "reference_sources": reference.source.value_counts().to_dict(),
+        "heldout_size": {"val": int((held.split == "val").sum()), "test": int((held.split == "test").sum())},
+        "exact_overlap_val": int(exact[held.split == "val"].sum()),
+        "exact_overlap_test": int(exact[held.split == "test"].sum()),
+        "reference_with_tfidf_ge_threshold": int(near.sum()),
+        "reference_with_tfidf_ge_threshold_by_source": reference[near].source.value_counts().to_dict(),
+        "threshold": threshold,
+    }, reference.assign(max_sim_to_heldout=sims)
+
+
 def binary_report(labels, scores, threshold):
     pred = scores >= threshold
     fpr, tpr, _ = roc_curve(labels, scores)

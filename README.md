@@ -65,7 +65,7 @@ question ──► Domain gate (MiniLM embeddings + logistic regression) ──�
 | Retrieval | `all-MiniLM-L6-v2` embeddings over training QA pairs | Tests whether non-parametric knowledge helps a small model |
 | Domain gate | Logistic regression on MiniLM embeddings | Compared with TF-IDF and embedding k-NN detectors |
 
-Baselines: random, majority-letter and TF-IDF retrieval (non-neural), plus zero-shot Qwen2.5 (pretrained, no fine-tuning).
+Baselines: random, majority-letter and TF-IDF retrieval (non-neural), MiniLM nearest-neighbour retrieval (neural, no generation), plus zero-shot Qwen2.5 (pretrained, no fine-tuning).
 
 ## 4. Experiments
 
@@ -74,6 +74,7 @@ All experiments are defined in [`configs/experiments.yaml`](configs/experiments.
 | Experiment | What changes | Research question |
 |---|---|---|
 | `baseline_random` / `baseline_majority` / `baseline_tfidf` | Non-neural | Lower bounds and lexical-overlap baseline |
+| `baseline_minilm_nn` | Dense nearest-neighbour retrieval (SAQ) | Is "look up the most similar training question" enough? |
 | `zs_qwen05`, `zs_qwen15` | Zero-shot | How much does the pretrained model already know? |
 | `lora_qwen05_r16` | Main model | Does domain fine-tuning help? |
 | `lora_qwen05_r8`, `lora_qwen05_r32` | LoRA rank | Capacity vs efficiency |
@@ -94,11 +95,14 @@ All experiments are defined in [`configs/experiments.yaml`](configs/experiments.
 
 **Baselines and domain gate (computed locally)**
 
-| Model | MCQ acc. | SAQ ROUGE-L | SAQ semantic sim. |
-|---|---|---|---|
-| Random | 0.209 | 0.077 | 0.164 |
-| Majority letter | 0.241 | – | – |
-| TF-IDF retrieval | 0.244 | 0.261 | 0.481 |
+| Model | MCQ acc. | Multi-answer exact | Multi-answer Jaccard | SAQ ROUGE-L | SAQ BERTScore-F1 | SAQ semantic sim. |
+|---|---|---|---|---|---|---|
+| Random | 0.209 | 0.000 | 0.262 | 0.077 | −0.093 | 0.164 |
+| Majority letter | 0.241 | 0.000 | 0.215 | – | – | – |
+| TF-IDF retrieval | 0.244 | 0.000 | 0.178 | 0.261 | 0.191 | 0.481 |
+| MiniLM nearest neighbour | – | – | – | 0.243 | 0.206 | 0.556 |
+
+BERTScore is rescaled with a baseline (`rescale_with_baseline=True`), so unrelated text scores about 0 and can go slightly negative. Baselines output a single letter, so they cannot exactly match multi-answer MCQs. Their Jaccard values are chance-level partial credit.
 
 | Domain gate | AUROC | Medical accepted | Non-medical rejected |
 |---|---|---|---|

@@ -19,6 +19,8 @@ def softmax(x, temperature=1.0):
 def save_outputs(name, description, mcq, probs, saq, saq_pred, use_bertscore):
     out_dir = RESULTS_DIR / name
     out_dir.mkdir(parents=True, exist_ok=True)
+    if mcq is None:
+        return save_saq_only(name, description, saq, saq_pred, use_bertscore, out_dir)
     mcq = mcq.copy()
     for j, letter in enumerate(LETTERS):
         mcq[f"p_{letter}"] = probs[:, j]
@@ -59,9 +61,39 @@ def save_outputs(name, description, mcq, probs, saq, saq_pred, use_bertscore):
     return metrics
 
 
-def tfidf_retrieval_predict(train, mcq, saq, k=5):
+def save_saq_only(name, description, saq, saq_pred, use_bertscore, out_dir):
+    saq = saq.copy()
+    saq["prediction"] = saq_pred
+    saq["gen_tokens"] = [len(p.split()) for p in saq_pred]
+    saq["hit_max_tokens"] = False
+    summary, per_example = generation_metrics(saq_pred, saq.rationale.tolist(), use_bertscore)
+    for k, v in per_example.items():
+        saq[k] = v
+    metrics = {"name": name, "group": "baseline", "description": description, "model_id": "-",
+               "method": "baseline", "rag": False}
+    metrics.update({f"saq_{k}": v for k, v in summary.items()})
+    metrics["saq_n"] = int(len(saq))
+    saq.drop(columns=["options", "answer_idx"], errors="ignore").to_csv(out_dir / "saq_predictions.csv", index=False)
+    (out_dir / "metrics.json").write_text(json.dumps(metrics, indent=2))
+    return metrics
+
+
+def answer_texts(train):
     knowledge = [knowledge_text(r) for r in train.to_dict("records")]
-    answers = [t.split(" A: ", 1)[1] if " A: " in t else t for t in knowledge]
+    return knowledge, [t.split(" A: ", 1)[1] if " A: " in t else t for t in knowledge]
+
+
+def minilm_retrieval_predict(train, saq):
+    from .retrieval import EmbeddingIndex
+
+    _, answers = answer_texts(train)
+    index = EmbeddingIndex().build(train.question.tolist(), list(range(len(train))))
+    hits = index.search(saq.question.tolist(), k=1)
+    return [answers[h[0][1]] for h in hits], [h[0][0] for h in hits]
+
+
+def tfidf_retrieval_predict(train, mcq, saq, k=5):
+    knowledge, answers = answer_texts(train)
     q_vec = TfidfVectorizer(ngram_range=(1, 2), sublinear_tf=True, stop_words="english").fit(train.question)
     train_q = q_vec.transform(train.question)
     content_vec = TfidfVectorizer(ngram_range=(1, 2), sublinear_tf=True, stop_words="english").fit(
@@ -107,5 +139,9 @@ def run_baselines(use_bertscore=True):
     tfidf = mcq.assign(pred=[LETTERS[i] for i in probs.argmax(axis=1)])
     results.append(save_outputs("baseline_tfidf", "TF-IDF nearest-neighbour retrieval over training QA pairs",
                                 tfidf, probs, saq, saq_pred, use_bertscore))
+
+    nn_pred, _ = minilm_retrieval_predict(train, saq)
+    results.append(save_outputs("baseline_minilm_nn", "MiniLM nearest-neighbour retrieval: answer of the most similar "
+                                "training question (SAQ only)", None, None, saq, nn_pred, use_bertscore))
     print(f"baselines finished in {time.time() - start:.1f}s")
     return results

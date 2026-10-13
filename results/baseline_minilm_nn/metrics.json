@@ -1,0 +1,17 @@
+{
+  "name": "baseline_minilm_nn",
+  "group": "baseline",
+  "description": "MiniLM nearest-neighbour retrieval: answer of the most similar training question (SAQ only)",
+  "model_id": "-",
+  "method": "baseline",
+  "rag": false,
+  "saq_rougeL": 0.24310476519669363,
+  "saq_token_f1": 0.2685407533824843,
+  "saq_semantic_sim": 0.5558776259422302,
+  "saq_bertscore_f1": 0.2059631645679474,
+  "saq_bleu": 9.945962047236016,
+  "saq_chrf": 29.955313795282784,
+  "saq_avg_pred_words": 27.1260162601626,
+  "saq_avg_ref_words": 38.0650406504065,
+  "saq_n": 246
+}

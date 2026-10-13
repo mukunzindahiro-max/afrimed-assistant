@@ -1,0 +1,65 @@
+{
+  "tfidf_knn": {
+    "auroc": 0.7322069868242689,
+    "aupr_in": 0.6796005868961059,
+    "aupr_out": 0.7767658962336077,
+    "macro_f1": 0.6436470799347986,
+    "in_domain_acceptance": 0.7157665030005456,
+    "ood_rejection": 0.6110587496072888,
+    "fpr_at_95_tpr": 0.8972667295004713,
+    "threshold": 0.3039604389915435,
+    "per_source_acceptance": {
+      "afrimed_consumer": 0.8203,
+      "afrimed_labeled": 0.6385,
+      "squad": 0.2883,
+      "web_questions": 0.4498
+    }
+  },
+  "embedding_knn": {
+    "auroc": 0.9969777728415706,
+    "aupr_in": 0.9956276076459063,
+    "aupr_out": 0.9981240083866827,
+    "macro_f1": 0.9764478952587317,
+    "in_domain_acceptance": 0.9579923622476814,
+    "ood_rejection": 0.9899465912661012,
+    "fpr_at_95_tpr": 0.006597549481621112,
+    "threshold": 0.5101963430643082,
+    "per_source_acceptance": {
+      "afrimed_consumer": 0.9859,
+      "afrimed_labeled": 0.9374,
+      "squad": 0.0183,
+      "web_questions": 0.005
+    }
+  },
+  "embedding_logreg": {
+    "auroc": 0.9989351161268462,
+    "aupr_in": 0.9983487819879985,
+    "aupr_out": 0.999365938676845,
+    "macro_f1": 0.9898734633943305,
+    "in_domain_acceptance": 0.9814511729405346,
+    "ood_rejection": 0.9959158027018536,
+    "fpr_at_95_tpr": 0.001885014137606032,
+    "threshold": 0.52845815062523,
+    "per_source_acceptance": {
+      "afrimed_consumer": 0.9961,
+      "afrimed_labeled": 0.9706,
+      "squad": 0.0092,
+      "web_questions": 0.001
+    }
+  },
+  "data": {
+    "reference_in_domain": 11554,
+    "ood_train": 6000,
+    "val_counts": {
+      "afrimed_consumer": 778,
+      "afrimed_labeled": 541,
+      "squad": 800
+    },
+    "test_counts": {
+      "afrimed_consumer": 779,
+      "afrimed_labeled": 1054,
+      "squad": 1200,
+      "web_questions": 1983
+    }
+  }
+}

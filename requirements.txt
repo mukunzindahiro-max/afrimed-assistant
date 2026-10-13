@@ -1,0 +1,17 @@
+transformers==4.46.3
+peft==0.13.2
+accelerate==1.1.1
+datasets==3.1.0
+sentence-transformers==3.2.1
+evaluate
+rouge_score
+sacrebleu
+bert_score
+scikit-learn
+pandas
+matplotlib
+seaborn
+pyyaml
+joblib
+huggingface_hub
+gradio

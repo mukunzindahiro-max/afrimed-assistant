@@ -1,0 +1,129 @@
+defaults:
+  kind: causal
+  method: lora
+  lora_r: 16
+  lora_alpha: 32
+  lora_dropout: 0.05
+  target_modules: [q_proj, k_proj, v_proj, o_proj, gate_proj, up_proj, down_proj]
+  learning_rate: 2.0e-4
+  epochs: 2
+  batch_size: 8
+  grad_accum: 2
+  max_len: 768
+  max_target_len: 256
+  warmup_ratio: 0.05
+  weight_decay: 0.0
+  data_variant: all
+  rag: false
+  rag_k: 3
+  gen_max_new_tokens: 128
+  eval_batch_size: 16
+  gradient_checkpointing: false
+
+experiments:
+  - name: zs_qwen05
+    group: zero-shot
+    priority: 1
+    description: Qwen2.5-0.5B-Instruct without fine-tuning
+    model_id: Qwen/Qwen2.5-0.5B-Instruct
+    method: none
+
+  - name: lora_qwen05_r16
+    group: lora
+    priority: 1
+    description: "Qwen2.5-0.5B-Instruct + LoRA (r=16, all linear layers, lr=2e-4, 2 epochs)"
+    model_id: Qwen/Qwen2.5-0.5B-Instruct
+
+  - name: ft_flant5_base
+    group: full-ft
+    priority: 1
+    description: Flan-T5-base encoder-decoder, full fine-tuning
+    model_id: google/flan-t5-base
+    kind: seq2seq
+    method: full
+    learning_rate: 3.0e-4
+    epochs: 3
+    max_len: 512
+    eval_batch_size: 32
+
+  - name: lora_qwen05_r16_rag
+    group: rag
+    priority: 1
+    description: LoRA r=16 model + top-3 retrieved training QA pairs as context
+    model_id: Qwen/Qwen2.5-0.5B-Instruct
+    method: none
+    adapter_from: lora_qwen05_r16
+    rag: true
+
+  - name: lora_qwen05_r8
+    group: lora-rank
+    priority: 2
+    description: LoRA rank 8
+    model_id: Qwen/Qwen2.5-0.5B-Instruct
+    lora_r: 8
+    lora_alpha: 16
+
+  - name: lora_qwen05_r32
+    group: lora-rank
+    priority: 2
+    description: LoRA rank 32
+    model_id: Qwen/Qwen2.5-0.5B-Instruct
+    lora_r: 32
+    lora_alpha: 64
+
+  - name: lora_qwen05_r16_lr5e5
+    group: lora-lr
+    priority: 2
+    description: LoRA r=16 with lower learning rate 5e-5
+    model_id: Qwen/Qwen2.5-0.5B-Instruct
+    learning_rate: 5.0e-5
+
+  - name: lora_qwen05_r16_attn
+    group: lora-modules
+    priority: 2
+    description: LoRA r=16 on attention projections only (q,k,v,o)
+    model_id: Qwen/Qwen2.5-0.5B-Instruct
+    target_modules: [q_proj, k_proj, v_proj, o_proj]
+
+  - name: lora_qwen05_r16_clean
+    group: lora-data
+    priority: 2
+    description: LoRA r=16 trained only on quality-filtered rows (neg_percent <= 0.5, not flagged)
+    model_id: Qwen/Qwen2.5-0.5B-Instruct
+    data_variant: clean
+
+  - name: zs_qwen05_rag
+    group: rag
+    priority: 2
+    description: Zero-shot Qwen2.5-0.5B-Instruct + top-3 retrieved training QA pairs
+    model_id: Qwen/Qwen2.5-0.5B-Instruct
+    method: none
+    rag: true
+
+  - name: zs_qwen15
+    group: zero-shot
+    priority: 3
+    description: Qwen2.5-1.5B-Instruct without fine-tuning
+    model_id: Qwen/Qwen2.5-1.5B-Instruct
+    method: none
+    eval_batch_size: 8
+
+  - name: lora_qwen15_r16
+    group: lora-scale
+    priority: 3
+    description: Qwen2.5-1.5B-Instruct + LoRA r=16
+    model_id: Qwen/Qwen2.5-1.5B-Instruct
+    batch_size: 4
+    grad_accum: 4
+    gradient_checkpointing: true
+    eval_batch_size: 8
+
+  - name: lora_qwen15_r16_rag
+    group: rag
+    priority: 3
+    description: Qwen2.5-1.5B LoRA r=16 + top-3 retrieved training QA pairs
+    model_id: Qwen/Qwen2.5-1.5B-Instruct
+    method: none
+    adapter_from: lora_qwen15_r16
+    rag: true
+    eval_batch_size: 8

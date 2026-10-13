@@ -1,0 +1,48 @@
+question,options,gold,pred,confidence,specialty,table,prediction,rationale,semantic_sim,rougeL
+Which of the following is a common etiological factor for the development of hepatocellular carcinoma (HCC) in Africa?,"['Chronic alcohol consumption', 'Hepatitis B virus (HBV) infection', 'Non-alcoholic fatty liver disease (NAFLD)', 'Hepatitis C virus (HCV) infection', 'Aflatoxin exposure']",E,B,0.9841926,Oncology,mcq_confident_wrong,,,,
+"A 30-year-old female consults you that her mother has been diagnosed with breast and ovarian cancer. Similarly, her maternal aunt was treated for breast cancer two years prior. She would like to be screened for breast cancer. Which screening approach IS NOT appropriate for her?","['Clinical examination', 'MRI scan', 'Ultrasound', 'Mammography', 'Breast elastography']",E,B,0.97582495,Oncology,mcq_confident_wrong,,,,
+Which of the following statements is TRUE about infants with gastroschisis?,"['It is not associated with malrotation', 'There is a high incidence of associated anomalies', 'The condition is usually associated wi th trisomy 21', 'It is always linked with maternal alcohol use', 'It frequently involves a defect in the umbilical ring']",A,B,0.9686844,Pediatrics,mcq_confident_wrong,,,,
+The most common cause of Primary Aldosteronism in adults,"['Bilateral adrenal hyperplasia', 'Adrenal carcinoma', 'Conn’s adenoma', 'Glucorticord suppressible hyperaldosterone', 'n/a']",A,C,0.96599,Endocrinology,mcq_confident_wrong,,,,
+Coombs Test may be indicated in the following condition:,"['a. D I C;', 'b. Hypetensive patient on Methy Dopa;', 'c. Haemorrhagic disease of the newborn;', 'd. Haemolytic anaemia.', 'n/a']",B,D,0.9594564,Hematology,mcq_confident_wrong,,,,
+Which of the following is a viral hemorrhagic fever that is endemic to certain regions of Africa and is transmitted to humans through contact with infected rodents or their urine?,"['Ebola virus disease', 'Lassa fever', 'Marburg virus disease', 'Rift Valley fever', 'Typhoid']",B,B,0.9964311,Infectious_Disease,mcq_confident_right,,,,
+Most cases of mesothelioma have been associated with exposure to which of the following substances?,"['Silica', 'Lead', 'Asbestos', 'Mercury', 'Beryllium']",C,C,0.9955389,Pulmonary_Medicine,mcq_confident_right,,,,
+The intermediate host in the life cycle of schistosomiasis is,"['snails', 'humans', 'fishes', 'dogs', 'none of the above']",A,A,0.9952584,Infectious_Disease,mcq_confident_right,,,,
+The following antipsychotic is associated with agranulocytosis:,"['Haloperidol', 'Aripiprazole', 'Risperidone', 'Clozapine', 'Fluphenazine']",D,D,0.9949626,Psychiatry,mcq_confident_right,,,,
+"Which of the following conditions, prevalent in Africa, is characterized by an abnormal enlargement of the thyroid gland, often resulting in a visibly enlarged neck, and is commonly associated with dietary iodine deficiency?","[""Graves' disease"", 'Thyroid adenoma', 'Toxic multinodular goiter', ""Hashimoto's thyroiditis"", 'Simple (nontoxic) goiter']",E,E,0.99467885,Endocrinology,mcq_confident_right,,,,
+What is the recommended first-line treatment for uncomplicated acute exacerbation of asthma in children in Africa?,,,,,,saq_best,"Inhaled short-acting beta agonists (SABAs) such as albuterol or salbutamol are the recommended first-line treatments for uncomplicated acute exacerbation of asthma in children in Africa, with consideration for inhaled corticosteroids in severe cases.","Inhaled short-acting beta agonists (SABAs) such as albuterol or salbutamol are the recommended first-line treatments for uncomplicated acute exacerbation of asthma in children in Africa, with consideration for inhaled corticosteroids in severe cases.",1.0000001,1.0
+List THREE common bacterial causes of acute otitis media,,,,,,saq_best,"i. Streptococcus pneumoniae 
+ii. Haemophilus influenzae 
+iii. Moraxella catarrhalis","i. Streptococcus pneumoniae 
+ii. Haemophilus influenzae 
+iii. Moraxella catarrhalis",1.0,1.0
+"Malaria Rationale: Malaria is a major cause of AKI in sub-Saharan Africa due to its effects on renal function, including hemolysis, intravascular volume depletion, and sequestration of infected red blood cells in the renal microvasculature.",,,,,,saq_best,"Malaria Rationale: Malaria is a major cause of AKI in sub-Saharan Africa due to its effects on renal function, including hemolysis, intravascular volume depletion, and sequestration of infected red blood cells in the renal microvasculature.","Malaria is a major cause of AKI in sub-Saharan Africa due to its effects on renal function, including hemolysis, intravascular volume depletion, and sequestration of infected red blood cells in the renal microvasculature.",0.99003327,0.9714285714285714
+What is the primary method used for diagnosing hemolytic anemia associated with liver cirrhosis in Africa?,,,,,,saq_best,"Liver function tests, imaging studies such as ultrasound or CT scan, and blood cultures are the primary methods used for diagnosing hemolytic anemia associated with liver cirrhosis in Africa.","Liver function tests, imaging studies such as ultrasound or CT scan, and liver biopsy are the primary methods used for diagnosing hemolytic anemia associated with liver cirrhosis in Africa.",0.9805149,0.9310344827586208
+What are the common causes of domestic violence in African populations?,,,,,,saq_best,"Common causes of domestic violence in African populations include gender inequality, cultural norms that tolerate or justify violence, economic hardship, and lack of access to support services.","Common causes of domestic violence in African populations include gender inequality, cultural norms, and socioeconomic factors.",0.97855866,0.6511627906976744
+"A 35-year-old lady presented with a six months history of a painful breast lump. The pain was cyclical (premenstrual). She is para 4+0 and she breast fed all her children. The breast lump was in the left upper outer quadrant. It measured 2 X 2 cm, not tender, mobile, firm, no clear margins and not attached to the skin. Both breasts felt lumpy and granular. The ipsilateral axillary nodes were not palpable. Other systems were normal. Histological evaluation is negative for malignancy. 
+ 
+a) What is your clinical diagnosis in this particular patient?",,,,,,saq_worst,b) What would be the next step in management?,Fibroadenosis (Fibrocystic disease).,-0.025479052,0.0
+What is the recommended first-line treatment for severe anemia due to chronic inflammatory diseases in Africa,,,,,,saq_worst,N/a,Treatment of the underlying inflammatory condition with anti-inflammatory medications such as corticosteroids or disease-modifying antirheumatic drugs (DMARDs) is the recommended first-line treatment for severe anemia due to chronic inflammatory diseases in Africa.,0.03248389,0.0
+what is the choice operation for a duodenal perforation?,,,,,,saq_worst,"Surgical repair of duodenal perforation is indicated when there is active bleeding or peritonitis. The goal of repair is to resect and anastomose the involved segment of the duodenum. 
+ 
+a) Open Repair 
+b) Laparoscopic Repair 
+c) Endoscopic Suturing",Graham patch/omentopexy,0.12869066,0.0
+"In few words state the standard treatment of first choice after these diagnoses are confirmed 
+ 
+- Fibroadenosis 
+- Fibroadenoma 
+- Galactocele 
+- Phylloides tumor 
+- Breast cyst Rx 
+- Mastitis",,,,,,saq_worst,Surgery,"- Fibroadenosis Rx – Analgesics (NSAIDs) 
+- Fibroadenoma Rx - Analgesics 
+- Galactocele Rx Repeated aspirations 
+- Phylloides tumor Rx – Wide excision 
+- Breast cyst Rx – Aspiration or Enucleation 
+- Mastitis – Antibiotics/analgesics",0.21754546,0.0
+Staging colorectal ca,,,,,,saq_worst,Stages of colorectal cancer depend on where it is located in your body. The stages range from stage I (the least severe) to stage IV (the most severe). Your doctor will use imaging tests and other methods to determine your stage.,"Duke staging 
+A Submucosa mucosa 
+B Muscular propria 
+C Lymph node involvement 
+D Distant Metastasis 
+E TNM staging",0.26393944,0.0677966101694915

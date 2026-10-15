@@ -11,7 +11,7 @@ import gradio as gr
 
 from afrimed.inference import AfriMedAssistant
 
-MODEL_REPO = os.environ.get("MODEL_REPO", "mukunzindahiro-max/afrimed-assistant-qwen2.5-0.5b-lora")
+MODEL_REPO = os.environ.get("MODEL_REPO", "MukunziJames/afrimed-assistant-qwen2.5-1.5b-lora")
 ADAPTER = os.environ.get("ADAPTER_PATH") or None
 ARTIFACTS = Path(os.environ.get("ARTIFACTS_DIR", HERE / "artifacts"))
 if not ARTIFACTS.exists():

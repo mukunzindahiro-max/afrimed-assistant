@@ -51,25 +51,32 @@ def main():
     import gradio
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("--space", required=True, help="e.g. username/afrimed-assistant")
+    parser.add_argument("--space", help="e.g. username/afrimed-assistant")
     parser.add_argument("--model-repo", required=True)
+    parser.add_argument("--build-only", action="store_true", help="only build build/space, e.g. for Railway")
     args = parser.parse_args()
+    if not args.build_only and not args.space:
+        parser.error("--space is required unless --build-only is set")
 
     build = ROOT / "build" / "space"
     if build.exists():
         shutil.rmtree(build)
     (build / "artifacts").mkdir(parents=True)
     shutil.copy(ROOT / "app" / "app.py", build / "app.py")
+    shutil.copy(ROOT / "app" / "Dockerfile", build / "Dockerfile")
     shutil.copytree(ROOT / "src" / "afrimed", build / "afrimed", ignore=shutil.ignore_patterns("__pycache__"))
     get_knowledge_index()
     shutil.copytree(MODELS_DIR / "knowledge_index", build / "artifacts" / "knowledge_index")
     shutil.copytree(MODELS_DIR / "ood", build / "artifacts" / "ood")
     (build / "requirements.txt").write_text(SPACE_REQUIREMENTS)
+    app = (build / "app.py").read_text().replace(
+        '"MukunziJames/afrimed-assistant-qwen2.5-1.5b-lora"', f'"{args.model_repo}"')
+    (build / "app.py").write_text(app)
+    if args.build_only:
+        print(f"built {build}")
+        return
     (build / "README.md").write_text(SPACE_README.format(gradio_version=gradio.__version__,
                                                          model_repo=args.model_repo))
-    app = (build / "app.py").read_text().replace(
-        '"mukunzindahiro-max/afrimed-assistant-qwen2.5-0.5b-lora"', f'"{args.model_repo}"')
-    (build / "app.py").write_text(app)
 
     api = HfApi()
     api.create_repo(args.space, repo_type="space", space_sdk="gradio", exist_ok=True)
